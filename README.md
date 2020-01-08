@@ -10,6 +10,11 @@ This repository contains scripts that query earthquakes from USGS and collect da
 - `data/twitter/`: Twitter data.
 - `notebooks/`: Jupyter notebook demo or work in progress results.
 
+## Packages (Python 3):
+- tweepy
+- pandas
+- newsapi
+
 ## Usage
 1. For automatic data collection, run `scheduler.py` in background. It is scheduled to query USGS every day at 1 am.
 ```
