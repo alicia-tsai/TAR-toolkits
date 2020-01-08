@@ -56,33 +56,31 @@ def get_news(api_key, news_search_words, date=str(date.today()), page=2, lang="e
 
     return news
 
-def get_earthquake_data(twitter_keys=None, news_key=None):
+def get_earthquake_data(twitter_keys=None, news_key=None, date):
     earthquake_tweet = {}
     earthquake_news = {}
-    today = str(date.today())
-    #today = "2020-01-07"  # to query from a specific date, uncomment and change the date.
     alertlevels = ["yellow", "orange", "red"]
 
-    # Query earthquake with magnatuide >= 5 and alert level orange (yellow, orange, red)
+    # Query earthquake with magnitude >= 5 and alert level yellow, orange, red
     for alert in alertlevels:
-        earthquakes = get_usgs(alert, today)
+        earthquakes = get_usgs(alert, date)
 
         if len(earthquakes) > 0:
             for i in range(len(earthquakes)):
                 location = earthquakes[i]["properties"]["place"].split(", ")[-1] # get earthquake location
                 print("  - {0}".format(location))
                 twitter_search_words = location + "+earthquake"
-                tweet_df = get_tweet(twitter_keys, twitter_search_words, today)
+                tweet_df = get_tweet(twitter_keys, twitter_search_words, date)
                 earthquake_tweet[location] = tweet_df
 
                 news_search_words = '+("earthquake" AND "{}")'.format(location)
-                news_df = get_news(news_key, news_search_words, today)
+                news_df = get_news(news_key, news_search_words, date)
                 earthquake_news[location] = news_df
 
     # Store tweet to csv file
     for location in earthquake_tweet.keys():
-        earthquake_tweet[location].to_csv(os.path.join("data", "twitter", "{}_{}_earthquake.csv".format(today, location)), index=False)
-        earthquake_news[location].to_csv(os.path.join("data", "news", "{}_{}_earthquake.csv".format(today, location)), index=False)
+        earthquake_tweet[location].to_csv(os.path.join("data", "twitter", "{}_{}_earthquake.csv".format(date, location)), index=False)
+        earthquake_news[location].to_csv(os.path.join("data", "news", "{}_{}_earthquake.csv".format(date, location)), index=False)
 
 
 if __name__ == "__main__":
@@ -97,4 +95,5 @@ if __name__ == "__main__":
     news_key = keysparser['newsapi_key']['api_key']
 
     # Query USGS and get social media and news data
-    get_earthquake_data(twitter_keys, news_key)
+    date = str(date.today()) # to query from a specific date, change this variable to something like '2020-01-07'
+    get_earthquake_data(twitter_keys, news_key, date)
