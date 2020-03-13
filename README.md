@@ -5,6 +5,7 @@ This repository contains scripts that query earthquakes from USGS and collect da
 ## Scripts and files
 - `src/earthquakes_data.py`: Query earthquakes with magnitude >= 5 and alert levels in yellow, orange, or red. Collect and store twitter and news data.
 - `src/scheduler.py`: Schedule automatic data collection every day. This file is to be run in background.
+- `data/data2template.py`: Convert earthquake log csv file from USGS to sentence description.
 - `keys.ini`: Credentials file.
 - `config.ini`: Default parameters.
 - `data/earthquakes_log.csv`: All the earthquakes queried so far.
