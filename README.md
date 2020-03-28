@@ -17,6 +17,12 @@ This repository contains scripts that query earthquakes from USGS and collect da
 - tweepy
 - pandas
 - newsapi
+- calander
+- pytz
+- bs4
+- datetime
+- dateutil
+- tzwhere
 
 ## Usage
 1. For automatic data collection, run `scheduler.py` in background. It is scheduled to query USGS every day at 1 am.
