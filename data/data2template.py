@@ -17,7 +17,7 @@ def process(source_data, dest_file, index):
     dest_file: txt template.
     index: the index of event to be processed (starting at 0).
     """
-    df = pd.read_csv("earthquakes_log.csv")   
+    df = pd.read_csv(source_data)   
     utctime = df.iloc[index]['rupture_time']
     longitude = df.iloc[index]['longitude']
     latitude = df.iloc[index]['latitude']
@@ -51,7 +51,7 @@ def process(source_data, dest_file, index):
         longitudeEW = "W";
     result += "The coordinate of epicenter of the earthquake was {}°{}, {}°{}.".format(abs(float(latitude)), latitudeNS, abs(float(longitude)), longitudeEW);
     result += "\n";
-    text = open("sample.txt", "a");
+    text = open(dest_file, "a");
     text.write(result);
     text.close();
 
