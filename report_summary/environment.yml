@@ -1,0 +1,11 @@
+name: base
+channels:
+  - defaults
+dependencies:
+  - nltk=3.4.5=py37_0
+  - pandas=1.0.3=py37h0573a6f_0
+  - pip:
+    - gensim==3.8.3
+    - numpy==1.16.0
+    - python-docx==0.8.10
+
