@@ -4,10 +4,9 @@ import time
 import requests
 import tweepy as tw
 import pandas as pd
-from datetime import date
+from datetime import date, timedelta
 import configparser
 from newsapi import NewsApiClient
-
 
 # Read global variables
 config = configparser.ConfigParser()
@@ -19,8 +18,8 @@ DURATION = config["default"]["duration"]
 MIN_MAGNITUDE = int(config["default"]["min_magnitude"])
 ALERT_LEVELS = config["default"]["alert_levels"].split(",")
 DATE = config["default"]["date"]
-MAX_TWEETS = config["default"]["max_tweets"]
-MAX_PAGE = config["default"]["max_page"]
+MAX_TWEETS = int(config["default"]["max_tweets"])
+MAX_PAGE = int(config["default"]["max_page"])
 
 
 def get_usgs(min_magnitude, alert, date):
@@ -68,12 +67,12 @@ def get_tweet(keys, search_words, date=str(date.today()), max_item=500, lang="en
     return tweet_df
 
 
-def get_news(api_key, news_search_words, date=str(date.today()), page=2, lang="en"):
+def get_news(api_key, news_search_words, from_date=str(date.today()), page=2, lang="en"):
     newsapi = NewsApiClient(api_key=api_key)
 
     # endpoint: /v2/everything
     all_articles = newsapi.get_everything(q=news_search_words,
-                                          from_param=date,
+                                          from_param=from_date,
                                           language=lang,
                                           sort_by='relevancy',
                                           page=page)  # each page is 20 articles
@@ -84,7 +83,7 @@ def get_news(api_key, news_search_words, date=str(date.today()), page=2, lang="e
     for article in all_articles['articles']:
         if keywords.intersection(article['title'].split()):
             articles.append([article['source']['name'], article['title'], article['url'],
-                            article['publishedAt'][:10], article['content']])
+                             article['publishedAt'][:10], article['content']])
 
     news = pd.DataFrame(data=articles, columns=['source_name', "title", "url", "date", "content"])
 
@@ -96,7 +95,7 @@ def log_earthquakes(earthquakes, log_file):
     for event in earthquakes:
         properties = event["properties"]
         coordinates = event["geometry"]["coordinates"]
-        rupture_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(properties["time"]/1000))
+        rupture_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(properties["time"] / 1000))
         country = properties["place"].split(", ")[-1]  # get earthquake country
         events.append([properties["place"], country, properties["mag"], rupture_time,
                        properties["felt"], properties["cdi"], properties["mmi"], properties["alert"],
@@ -105,11 +104,12 @@ def log_earthquakes(earthquakes, log_file):
     log = pd.read_csv(log_file)
     new_log = pd.DataFrame(events, columns=log.columns)
     log = pd.concat([log, new_log], ignore_index=True)
-    log.drop_duplicates(inplace=True)
+    log.drop_duplicates(subset=['place', 'country', 'magnitude', 'rupture_time']
+                        , keep='first', inplace=True)
     log.to_csv(log_file, index=False)
 
 
-def get_earthquake_data(date, twitter_keys, news_key):
+def get_earthquake_data(query_date, twitter_keys, news_key):
     # Create earthquake log if not existed
     log_file = os.path.join(os.getcwd(), DATA_DIR, "earthquakes_log.csv")
     if not os.path.isfile(log_file):
@@ -120,8 +120,9 @@ def get_earthquake_data(date, twitter_keys, news_key):
 
     # Query earthquake with magnitude >= 5 and alert level yellow, orange, red
     for alert in ALERT_LEVELS:
-        earthquakes = get_usgs(MIN_MAGNITUDE, alert, date)
-        if len(earthquakes) > 0: log_earthquakes(earthquakes, log_file)
+        earthquakes = get_usgs(MIN_MAGNITUDE, alert, query_date)
+        if len(earthquakes) > 0:
+            log_earthquakes(earthquakes, log_file)
 
     # Collect social media and news data for recent earthquakes within DURATION
     log = pd.read_csv(log_file)
@@ -135,12 +136,12 @@ def get_earthquake_data(date, twitter_keys, news_key):
 
         # Collect tweets
         twitter_search_words = country + "+earthquake"
-        tweet_df = get_tweet(twitter_keys, twitter_search_words, date, MAX_TWEETS)
+        tweet_df = get_tweet(twitter_keys, twitter_search_words, query_date, MAX_TWEETS)
         earthquake_tweet[(rupture_date, country)] = tweet_df
 
         # Collect news
         news_search_words = '+("earthquake" AND "{}")'.format(country)
-        news_df = get_news(news_key, news_search_words, date, MAX_PAGE)
+        news_df = get_news(news_key, news_search_words, query_date, MAX_PAGE)
         earthquake_news[(rupture_date, country)] = news_df
 
     # Store tweet and news to csv file
@@ -168,7 +169,7 @@ def get_earthquake_data(date, twitter_keys, news_key):
             news_df.to_csv(news_file, index=False)
 
     # Change collect_data flag to False for events longer than DURATION
-    duration = pd.to_datetime(date.today()) - pd.to_datetime(log.rupture_time)
+    duration = pd.to_datetime(query_date.today()) - pd.to_datetime(log.rupture_time)
     log.loc[duration > pd.to_timedelta(DURATION), "collect_data"] = False
 
 
@@ -184,8 +185,10 @@ if __name__ == "__main__":
     news_key = keys_parser['newsapi_key']['api_key']
 
     # Query USGS and get social media and news data
-    if DATE != "today":
-        date = DATE
-    else:
-        date = str(date.today())
-    get_earthquake_data(date, twitter_keys, news_key)
+    today = date.today()
+    print("Today is: ", today)
+    # Yesterday date
+    yesterday = today - timedelta(days=1)
+    print("Query date: ", yesterday)
+
+    get_earthquake_data(yesterday, twitter_keys, news_key)
