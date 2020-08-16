@@ -6,7 +6,7 @@ import tweepy as tw
 import pandas as pd
 from datetime import date, timedelta
 import configparser
-from newsapi import NewsApiClient
+from newsapi.newsapi_client import NewsApiClient
 
 # Read global variables
 config = configparser.ConfigParser()

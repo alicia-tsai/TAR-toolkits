@@ -27,10 +27,10 @@ This repository contains scripts that query earthquakes from USGS and collect da
 ## Usage
 1. For automatic data collection, run `scheduler.py` in background. It is scheduled to query USGS every day at 1 am.
 ```
-python3 scheduler.py
+python3 src/scheduler.py
 ```
 
 2. Data collection can also be invoked manually by running `earthquakes_data.py`. This script will query earthquakes that happen today. To query from a specific date, change the variable `date` in the script.
 ```
-python3 earthquakes_data.py
+python3 src/earthquakes_data.py
 ```
