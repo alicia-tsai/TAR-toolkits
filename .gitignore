@@ -106,3 +106,4 @@ venv.bak/
 # miscellaneous
 .idea/*
 data/*
+.DS_Store
