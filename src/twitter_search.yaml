@@ -1,0 +1,13 @@
+search_rules:
+    from-date: 2019-12-28 00:00
+    to-date: 2020-03-28 00:00
+    pt-rule: (earthquake) (collapse OR damage OR building) place_country:PR
+
+search_params:
+    results-per-call: 100
+    max-results: 5000
+
+output_params:
+    save_file: True
+    filename_prefix: ../data/twitter-puerto-rico/
+    results_per_file: 10000000
