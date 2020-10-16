@@ -15,7 +15,7 @@ Here, the datafile must be a `.csv` file, and model_name is either "lr" (for log
 Example: `python3 classify_linear.py dataset.csv svm`
 
 
-# Dependency
+## Dependency
 You must have following programs/libraries on your machine
 - python3
 - nltk
