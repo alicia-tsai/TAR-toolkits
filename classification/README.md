@@ -9,7 +9,10 @@ The python files do cleaning, lemmatizing, vectorizing, training, and validating
 
 ## How to Run (`classify_linear.py`)
 Simply run `python3 classify_linear.py datafile_name model_name`.
+
 Here, the datafile must be a `.csv` file, and model_name is either "lr" (for logistic/softmax regression) or "svm" (for SVM model).
+
+Example: `python3 classify_linear.py dataset.csv svm`
 
 
 # Dependency
