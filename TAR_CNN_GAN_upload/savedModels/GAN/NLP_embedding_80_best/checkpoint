@@ -1,0 +1,2 @@
+model_checkpoint_path: "recall0_0.7272727272727273recall2_0.7333333333333333_epoch_402_SSL_GAN.ckpt"
+all_model_checkpoint_paths: "recall0_0.7272727272727273recall2_0.7333333333333333_epoch_402_SSL_GAN.ckpt"
