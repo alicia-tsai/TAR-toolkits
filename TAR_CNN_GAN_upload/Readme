@@ -1,0 +1,8 @@
+This folder contains code for training, testing or predicting using CNN and GAN.
+
+0. Put raw train .csv file ("dataset174.csv") and raw test .csv file("albania.csv")
+1. Preprocess input data: TAR_NLP_Preprocess.ipnb. This file writes train and test data into the numpyData folder for both CNN and GAN
+2. Train CNN: TAR_NLP_CNN.ipynb. This file trains the CNN model. TF models are saved in "savedModels/CNN"
+3. Train GAN: SSL_GAN_NLP.ipynb. This file trains the GAN model. TF models are saved in "savedModels/GAN"
+4. Run GAN model on test data (or any data for classification): SSL_GAN_NLP_Run_Model.ipynb. This file imports model from "savedModels/GAN" and run on the test data, this file outputs "albania_GAN_predictions.csv"
+5. Run CNN model on test data (or any data for classification): CNN_NLP_Run_Model.ipynb. This file imports model from "savedModels/CNN" and run on the test data, this file outputs "albania_CNN_predictions.csv"
