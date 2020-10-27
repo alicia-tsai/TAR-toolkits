@@ -5,13 +5,19 @@ from bs4 import BeautifulSoup
 import requests
 from PIL import Image
 
-def process(source_data, dest_file, index):
+def process(source_data, dest_file_pic, dest_file_text, index):
     """
-    source_data: csv data file, with directory to the csv file.
-    dest_file: txt template.
-    index: the index of event to be processed (starting at 0).
+    README: This function is used to obtain the earthquake tectonic and intensity information from USGS website.
+        It reads the website link from the standardized USGS csv data file, 
+        and "inspect" the website to download the relevant information.
+        The intensity map is saved as picture, and the tectonic information is saved as text files.
     
-    In order to inspect page elemtn, we need selenium, which could be downloaded at 
+    source_data: csv data file (and directory).
+    dest_file_pic: intensity information output file name (and directory). *.jpg recommended.
+    dest_file_text: tectonic information output file name (and directory). *.txt recommended.
+    index: the index of event to be processed in the csv file (starting at 0).
+    
+    In order to inspect pages, we need selenium, which could be downloaded at 
     https://selenium-python.readthedocs.io/installation.html#downloading-python-bindings-for-selenium
     We used Chrome version, which could automatically open Chrome
     After downloading, run it, and fill in below the executable_path, which is
@@ -42,10 +48,10 @@ def process(source_data, dest_file, index):
                 url_image = a['href']
                 break
 
-        driver.close()
+        #driver.close()
 
     img = Image.open(urlopen(url_image))
-    img.save("intensity.jpg")
+    img.save(dest_file_pic)
 
     # tectonic information
     driver = webdriver.Chrome(executable_path="/Users/lichenglong/Downloads/chromedriver")
@@ -55,11 +61,11 @@ def process(source_data, dest_file, index):
     soup = BeautifulSoup(content_html, "html.parser")
     p_tags = soup.find_all("p")
 
-    text = open(dest_file, "a");
+    text = open(dest_file_text, "a");
     for p in p_tags:
         text.write(p.getText())
     text.close()
 
-    driver.close()
+    #driver.close()
 
-process("earthquakes_log.csv", "record.txt", 1);
+process("earthquakes_log.csv", "intensity.jpg", "record.txt", 0);

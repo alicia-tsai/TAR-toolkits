@@ -13,10 +13,14 @@ from tzwhere import tzwhere
 
 def process(source_data, dest_file, index):
     """
-    source_data: csv data file, with directory to the csv file.
-    dest_file: txt template.
-    index: the index of event to be processed (starting at 0).
+    README: This function is used to process the earthquake basic information from csv file 
+        into sentences, and save to a file. The csv file is the standardized file downloaded from the USGS website.
+    
+    source_data: csv data file (and directory).
+    dest_file: output file name (and directory). *.txt recommended.
+    index: the index of event to be processed in the csv file (starting at 0).
     """
+
     df = pd.read_csv(source_data)   
     utctime = df.iloc[index]['rupture_time']
     longitude = df.iloc[index]['longitude']
