@@ -47,5 +47,5 @@ nltk.download()
 ```
 Note that the downloading process is only required in the first time.
 
-### 
+### Selenium
 In order to inspect pages, package ```selenium``` is needed, which could be downloaded [here]( https://selenium-python.readthedocs.io/installation.html#downloading-python-bindings-for-selenium). I used Chrome version, so the package could automatically open Chrome. After downloading, run it, and fill in below the executable_path (the location of the executable file on the disk, e.g. in my case, it is /Users/lichenglong/Downloads/chromedriver).
