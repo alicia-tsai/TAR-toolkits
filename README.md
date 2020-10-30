@@ -31,6 +31,9 @@ This repository contains scripts that query earthquakes from USGS and collect da
 - PyPDF2
 - textract
 - nltk
+- [cv2](https://pypi.org/project/opencv-python/): ```pip install opencv-python```
+- pytesseract
+- time
 
 ## Usage
 Data collection can also be invoked manually by running `earthquakes_data.py`. This script will query earthquakes that happen today. To query from a specific date, change the variable `date` in the script.
@@ -48,4 +51,12 @@ nltk.download()
 Note that the downloading process is only required in the first time.
 
 ### Selenium
-In order to inspect pages, package ```selenium``` is needed, which could be downloaded [here]( https://selenium-python.readthedocs.io/installation.html#downloading-python-bindings-for-selenium). I used Chrome version, so the package could automatically open Chrome. After downloading, run it, and fill in below the executable_path (the location of the executable file on the disk, e.g. in my case, it is /Users/lichenglong/Downloads/chromedriver).
+In order to inspect pages, package ```selenium``` is needed, which could be downloaded [here](https://selenium-python.readthedocs.io/installation.html#downloading-python-bindings-for-selenium). I used Chrome version, so the package could automatically open Chrome. After downloading, run it, and fill in below the executable_path (the location of the executable file on the disk, e.g. in my case, it is /Users/lichenglong/Downloads/chromedriver) in the python codes when the package is used.
+
+### Pytesseract
+In order to extract text from images, Tesseract is used. The python package pytesseract is a python wrapper. Follow the following instructions to install and configure the tool.
+- Tesseract needs to be installed by following the [link](https://tesseract-ocr.github.io/tessdoc/Home.html). For example, I am using MacOS, so I used ```homebrew```.
+- pytesseract needs to be installed like normal packages (e.g. ```pip install pytesseract```)
+- In Python, configure the path to Tesseract. In the official manual (in the link above) the path could be checked in terminal by following instructions (e.g., ```brew info tesseract``` for MacOS). HOWEVER, it does not work for my case. I found the path by using the following line in terminal: ```which tesseract```. The path could be configured by calling ```pytesseract.pytesseract.tesseract_cmd = YOUR PATH``` in python code.
+    
+
