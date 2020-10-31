@@ -6,7 +6,8 @@ import tweepy as tw
 import pandas as pd
 from datetime import date, timedelta
 import configparser
-from newsapi.newsapi_client import NewsApiClient
+# rom newsapi.newsapi_client import NewsApiClient
+from newsapi import NewsApiClient
 
 # Read global variables
 config = configparser.ConfigParser()
@@ -49,7 +50,7 @@ def limit_handled(cursor):
             time.sleep(1 * 60)
 
 
-def get_tweet(keys, search_words, date=str(date.today()), max_item=500, lang="en", geocode=None):
+def get_tweet(keys, search_words, date=str(date.today()), max_item=1000, geocode=None):
     consumer_key, consumer_secret, access_token, access_token_secret = keys
     auth = tw.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
@@ -59,9 +60,9 @@ def get_tweet(keys, search_words, date=str(date.today()), max_item=500, lang="en
     search_words = search_words + " -filter:retweets"
 
     # Collect tweets
-    tweets = tw.Cursor(api.search, q=search_words, lang=lang, geocode=geocode, since=date).items(max_item)
+    tweets = tw.Cursor(api.search, q=search_words, geocode=geocode, since=date, tweet_mode='extended').items(max_item)
     tweet_data = [[tweet.user.screen_name, tweet.user.location, tweet.created_at,
-                   tweet.coordinates, tweet.text] for tweet in tweets]
+                   tweet.coordinates, tweet.full_text] for tweet in tweets]
     tweet_df = pd.DataFrame(data=tweet_data, columns=['user', "location", "date", "coordinates", "content"])
 
     return tweet_df
@@ -124,8 +125,14 @@ def get_earthquake_data(query_date, twitter_keys, news_key):
         if len(earthquakes) > 0:
             log_earthquakes(earthquakes, log_file)
 
-    # Collect social media and news data for recent earthquakes within DURATION
+    # Log earthquake
     log = pd.read_csv(log_file)
+
+    # Change collect_data flag to False for events longer than DURATION
+    duration = pd.to_datetime(query_date.today()) - pd.to_datetime(log.rupture_time)
+    log.loc[duration > pd.to_timedelta(DURATION), "collect_data"] = False
+
+    # Collect social media and news data for recent earthquakes within DURATION
     events = log[log.collect_data == True]
 
     earthquake_tweet = {}
@@ -167,10 +174,6 @@ def get_earthquake_data(query_date, twitter_keys, news_key):
             new_df = earthquake_news[(rupture_date, country)]
             news_df = pd.concat([current_df, new_df])
             news_df.to_csv(news_file, index=False)
-
-    # Change collect_data flag to False for events longer than DURATION
-    duration = pd.to_datetime(query_date.today()) - pd.to_datetime(log.rupture_time)
-    log.loc[duration > pd.to_timedelta(DURATION), "collect_data"] = False
 
 
 if __name__ == "__main__":
