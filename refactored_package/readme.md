@@ -1,6 +1,6 @@
-#TAR Package
+# TAR Package
 
-##Files
+## Files
 - `tar_main.py`: Primary file to run different parts of the code
 - `classifiers.py`: File that aggregates the 4 classifiers into 1 output CSV 
 - `summarize.py`: Summarizes each category and generates Word document 
@@ -9,11 +9,7 @@
 - `classify_linear.py`: Minjune's Classifiers 
 - `nlp_Preprocess.py`: Billy's preprocessing file
 
-
-
-
-
-##Usage
+## Usage
 
 To run, call `tar_main.py`, with 2 command line arguments: the training dataset, and the testing dataset. 
 
