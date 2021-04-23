@@ -1,0 +1,2 @@
+model_checkpoint_path: "recall0_15recall2_62_epoch_4_SSL_GAN.ckpt"
+all_model_checkpoint_paths: "recall0_15recall2_62_epoch_4_SSL_GAN.ckpt"

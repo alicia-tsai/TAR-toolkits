@@ -1,0 +1,17 @@
+place,country,magnitude,rupture_time,felt,cdi,mmi,alert,longitude,latitude,depth,url,collect_data
+"27 km SW of Pocito, Argentina",Argentina,6.4,2021-01-19 06:46:22,769,6.2,7.157,yellow,-68.8182,-31.8232,20.0,https://earthquake.usgs.gov/earthquakes/eventpage/us7000d18q,True
+"50 km NE of Bandar-e Lengeh, Iran",Iran,5.5,2021-01-16 01:31:04,41,4.9,6.933,yellow,55.1859,26.9258,8.0,https://earthquake.usgs.gov/earthquakes/eventpage/us7000d0gn,True
+"6 km WNW of Sivrice, Turkey",Turkey,5.5,2020-12-27 10:37:32,25,8.2,7.169,yellow,39.2345,38.4605,9.0,https://earthquake.usgs.gov/earthquakes/eventpage/us6000d3dd,True
+"2 km WSW of Petrinja, Croatia",Croatia,6.4,2020-12-29 15:19:54,2539,8.8,8.623,orange,16.2581,45.425,10.0,https://earthquake.usgs.gov/earthquakes/eventpage/us6000d3zh,True
+"82 km SSE of Lethem, Guyana",Guyana,5.6,2021-01-31 11:05:14,42,4.9,7.3370000000000015,yellow,-59.6065,2.6669,7.22,https://earthquake.usgs.gov/earthquakes/eventpage/us6000ddge,True
+"26 km SW of Pocito, Argentina",Argentina,6.4,2021-01-18 18:46:22,771,6.3,7.067,yellow,-68.8059,-31.8304,20.0,https://earthquake.usgs.gov/earthquakes/eventpage/us7000d18q,True
+"50 km NE of Bandar-e Lengeh, Iran",Iran,5.5,2021-01-15 13:31:04,41,4.9,6.933,yellow,55.1859,26.9258,8.0,https://earthquake.usgs.gov/earthquakes/eventpage/us7000d0gn,True
+"7 km WNW of Sivrice, Turkey",Turkey,5.5,2020-12-26 22:37:32,25,8.2,7.186,yellow,39.2302,38.4563,9.0,https://earthquake.usgs.gov/earthquakes/eventpage/us6000d3dd,True
+"2 km WSW of Petrinja, Croatia",Croatia,6.4,2020-12-29 03:19:54,2542,9.1,8.623,orange,16.2578,45.4246,10.0,https://earthquake.usgs.gov/earthquakes/eventpage/us6000d3zh,True
+"13 km W of Týrnavos, Greece",Greece,5.6,2021-03-04 10:38:19,50,8.2,7.934,yellow,22.1332,39.7476,10.0,https://earthquake.usgs.gov/earthquakes/eventpage/us7000dfku,True
+"5 km ESE of Vogar, Iceland",Iceland,5.6,2021-02-24 02:05:59,67,8.6,8.088,yellow,-22.2736,63.9602,10.0,https://earthquake.usgs.gov/earthquakes/eventpage/us6000dkmk,True
+"2 km SW of Magsaysay, Philippines",Philippines,6.0,2021-02-06 20:22:57,76,8.8,8.128,yellow,125.1711,6.7492,24.92,https://earthquake.usgs.gov/earthquakes/eventpage/us6000df9r,True
+"10 km WNW of Týrnavos, Greece",Greece,6.3,2021-03-03 02:16:10,207,9.1,8.119,orange,22.1756,39.7641,10.0,https://earthquake.usgs.gov/earthquakes/eventpage/us7000df40,True
+"72 km ENE of Namie, Japan",Japan,7.1,2021-02-13 06:07:50,825,9.1,8.009,orange,141.7494,37.7453,49.94,https://earthquake.usgs.gov/earthquakes/eventpage/us6000dher,True
+"82 km SSE of Lethem, Guyana",Guyana,5.5,2021-01-31 11:05:14,42,4.9,7.5520000000000005,yellow,-59.5946,2.6693,5.38,https://earthquake.usgs.gov/earthquakes/eventpage/us6000ddge,True
+"28 km SW of Pocito, Argentina",Argentina,6.4,2021-01-18 18:46:21,773,6.3,7.117999999999999,yellow,-68.8221,-31.8421,16.87,https://earthquake.usgs.gov/earthquakes/eventpage/us7000d18q,True
