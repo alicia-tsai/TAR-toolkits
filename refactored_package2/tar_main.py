@@ -30,9 +30,8 @@ def runData2Template(inputDictionary):
     earthquakeLogs = pd.read_csv("data/earthquakes_log.csv") 
     earthquakeLogs = earthquakeLogs.to_numpy()
 
-    for x in range(0, 1): 
+    for x in range(0, len(earthquakeLogs)): 
         #add 7 days check only then generate report
-      
         ruptureTime = earthquakeLogs[x][3]
         city = earthquakeLogs[x][1]
         
@@ -41,7 +40,10 @@ def runData2Template(inputDictionary):
         if(not (ruptureTime, city) in inputDictionary): 
             inputDictionary[(ruptureTime, city)] = [] 
             
-        workingPath = os.path.join(os.getcwd(), "reports", ruptureTime + "_" + city) 
+        ruptureTime = ruptureTime.replace("/", "-") 
+        ruptureTimeForPath = ruptureTime[:ruptureTime.find(" ")]
+        
+        workingPath = os.path.join(os.getcwd(), "reports", ruptureTimeForPath + "_" + city) 
         
         if(not os.path.isdir(workingPath)): 
             os.mkdir(workingPath)
@@ -55,7 +57,7 @@ def runData2Template(inputDictionary):
         
         urlLinks = (newsArticles["url"]).to_numpy() 
         
-        for j in range(9, min(len(urlLinks), 2) + 15): 
+        for j in range(0, len(urlLinks)): 
             get_content(sentencesList, urlLinks[j], workingPath + "/article.txt") 
         
         buildingColumn = np.repeat("building", len(sentencesList)) 
@@ -74,7 +76,6 @@ def runData2Template(inputDictionary):
         
         run_classifiers("dataset.csv", workingPath + "/sentences.csv", workingPath + "/output.csv", False) 
         dataOutput = pd.read_csv(workingPath + "/output.csv") 
-        
         
         sectionsDictionary = {"Buildings": get_summary(dataOutput, "building", 0.2), "Resilience": get_summary(dataOutput, "resilience", 0.2), "Infrastructure": get_summary(dataOutput, "infrastructure", 0.2)}
         
@@ -119,8 +120,8 @@ if __name__ == '__main__':
   #  run_classifiers("dataset.csv", "Albania.csv", "output.csv") 
   #  run_classifiers("dataset.csv", "sentences.csv","output.csv")
 
-   # data = pd.read_csv("output.csv") 
+    data = pd.read_csv("output.csv") 
 
-   # sectionsDictionary = {"Buildings": get_summary(data, "building", 0.2), "Resilience": get_summary(data, "resilience", 0.2), "Infrastructure": get_summary(data, "infrastructure", 0.2)}
+    sectionsDictionary = {"Buildings": get_summary(data, "building", 0.2), "Resilience": get_summary(data, "resilience", 0.2), "Infrastructure": get_summary(data, "infrastructure", 0.2)}
 
-   # generateBriefing(sectionsDictionary)
+    generateBriefing(sectionsDictionary)

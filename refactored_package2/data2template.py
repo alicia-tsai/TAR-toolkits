@@ -24,6 +24,7 @@ def generateSummary(source_data, dest_file, index):
     df = pd.read_csv(source_data)  
  
     utctime = df.iloc[index]['rupture_time']
+    utctime = utctime.replace("/", "-") 
     longitude = df.iloc[index]['longitude']
     latitude = df.iloc[index]['latitude']
 

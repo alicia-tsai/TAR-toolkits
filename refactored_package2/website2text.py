@@ -3,11 +3,13 @@ import textract
 import re
 from nltk import sent_tokenize
 import pandas as pd
+import os 
 from urllib.request import urlopen
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import requests
 from PIL import Image
+
 
 # Download ntlk
 # nltk.download()
@@ -26,14 +28,18 @@ def get_content(sentencesList, website, dest_file=""):
         nltk needs to be downloaded first by using "nltk.download()".
     """
 
-    driver = webdriver.Chrome("/Users/vedantmathur/Downloads/chromedriver")
+    dirname = os.path.dirname(__file__)
+    print(dirname + "wjht")
+    driverLocation = dirname + "/chromedriver"
+    print(driverLocation) 
+    driver = webdriver.Chrome(driverLocation) 
     try:
         driver.get(website)
         content_element = driver.find_element_by_tag_name("div")
         content_html = content_element.get_attribute("innerHTML")
         soup = BeautifulSoup(content_html, "html.parser")
         p_tags = soup.find_all("p")
-        print(content_html) 
+      #  print(content_html) 
         #print(dest_file) 
         if (dest_file != ""):
           #  print("what") 
